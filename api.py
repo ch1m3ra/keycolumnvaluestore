@@ -1,10 +1,10 @@
+#! /usr/bin/python2.7
+
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response
 
 from nosql import KeyColumnValueStore
-
-from pprint import pprint
 
 store = KeyColumnValueStore(path='/tmp/codetestdata')
 
@@ -16,11 +16,11 @@ def get_key(request):
   key = request.matchdict['key']
   start = request.GET.get('start', None)
   stop = request.GET.get('stop', None)
-  
+
   if start is not None or stop is not None:
     response = store.get_slice(key, start, stop)
   else:
-    response = store.get(key)
+    response = store.get_key(key)
   return response
 
 def get_key_column(request):
